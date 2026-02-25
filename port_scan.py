@@ -13,6 +13,21 @@ def is_port_open(host, port):
     try:
         #tries to connect to the specified host using that port
         s.connect((host, port))
-        return True #if connection is successful, the port is open
+
+        #set a timeout for the connection attempt
+        s.settimeout(1)
     except:
-        return False #if connection fails, the port is closed
+        # cannot connect to the port; port is closed
+        return False
+    else:
+        # connection successful; port is open
+        return True
+
+# get host from user input
+host = input("Enter the host IP address or domain name to scan: ")
+# iterate through ports 1 to 1024
+for port in range(1, 1025):
+    if is_port_open(host, port):
+        print(f"{GREEN}[+] Port {port} is open      {RESET}") # Print open ports in green 
+    else:
+        print(f"{GRAY}[-] Port {port} is closed     {RESET}", end='\r') # Print closed ports in gray and overwrite the line for better readability
