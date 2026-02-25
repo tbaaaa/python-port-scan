@@ -1,4 +1,5 @@
 import socket #module for connections
+import ipaddress #module for validating IP addresses
 from colorama import init, Fore #module for colored text
 
 init() #initialize colorama
@@ -25,6 +26,13 @@ def is_port_open(host, port):
 
 # get host from user input
 host = input("Enter the host IP address or domain name to scan: ")
+try:
+    # Validate the host input
+    ipaddress.ip_address(host) # Check if it's a valid IP address
+except ValueError:
+    print(f"{GRAY}[-] Invalid IP address{RESET}")
+    exit()
+
 # iterate through ports 1 to 1024
 for port in range(1, 1025):
     if is_port_open(host, port):
