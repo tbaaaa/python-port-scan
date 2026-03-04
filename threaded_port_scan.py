@@ -29,6 +29,7 @@ def port_scan(port):
     finally:
         s.close()
 
+# gets port numbers from the queue to scan it and then add it to the done tasks
 def scan_thread():
     global q
     while True:
@@ -37,3 +38,20 @@ def scan_thread():
         #scan that port number
         port_scan(worker)
         q.task_done()
+
+# populates the queue with the port numbers and spwaning NUM_OF_THREADS threads to consume them
+def main(host, ports):
+    global q
+    for t in range(NUM_OF_THREADS):
+        # for each thread, start it
+        t = Thread(target=scan_thread)
+        # By setting the daemon to true, that thread will end when the main thread ends
+        t.daemon = True
+        # start the daemon thread
+        t.start()
+    for worker in ports:
+        # for each port, put that port into the queue
+        # to start scanning
+        q.put(worker)
+    # wait the for the threads to finish
+    q.join()
