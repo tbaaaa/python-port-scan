@@ -31,8 +31,8 @@ host = input("Enter the host IP address or domain name to scan: ")
 ip = socket.gethostbyname(host) # also accept IPs (user can also enter a valid IP; method will return it)
 
 try:
-    # Validate the host input
-    ipaddress.ip_address(ip) # Check if it's a valid IP address
+    # Validate the host input and check if it's a valid IP address
+    ipaddress.ip_address(ip) 
 except ValueError:
     print(f"{GRAY}[-] Invalid IP address{RESET}")
     exit()
@@ -40,6 +40,13 @@ except ValueError:
 # iterate through ports 1 to 1024
 for port in range(1, 1025):
     if is_port_open(host, port):
-        print(f"{GREEN}[+] Port {port} is open      {RESET}") # Print open ports in green 
+        # Print open ports in green
+        print(f"{GREEN}[+] Port {port} is open!      {RESET}")
+        portCount = portCount + 1
     else:
-        print(f"{GRAY}[-] Port {port} is closed     {RESET}", end='\r') # Print closed ports in gray and overwrite the line for better readability
+        # Print closed ports in gray and overwrite the line for better readability
+        print(f"{GRAY}[-] Port {port} is closed..     {RESET}", end='\r')
+# prints message and count after scan 
+print(f"{GREEN}[+++] Port scan is completed!", end="\n")
+print(f"{GREEN}[+++] Ports scanned: ", end="\n")
+print(f"{GREEN}[+++] {portCount} open ports have scanned on {host}")  
