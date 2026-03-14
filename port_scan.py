@@ -26,8 +26,9 @@ def is_port_open(host, port):
         # closes socket after connection attempt
         s.close()
 
-# get host from user input
+# get ip or hostname from user input
 host = input("Enter the host IP address or domain name to scan: ")
+num_ports = int(input("Enter number of ports to scan (large number ==> scan takes more time..)"))
 ip = socket.gethostbyname(host) # also accept IPs (user can also enter a valid IP; method will return it)
 
 try:
@@ -38,7 +39,7 @@ except ValueError:
     exit()
 
 # iterate through ports 1 to 1024
-for port in range(1, 1025):
+for port in range(1, num_ports):
     if is_port_open(host, port):
         # Print open ports in green
         print(f"{GREEN}[+] Port {port} is open!      {RESET}")
@@ -47,6 +48,6 @@ for port in range(1, 1025):
         # Print closed ports in gray and overwrite the line for better readability
         print(f"{GRAY}[-] Port {port} is closed..     {RESET}", end='\r')
 # prints message and count after scan 
-print(f"{GREEN}[+++] Port scan is completed!", end="\n")
-print(f"{GREEN}[+++] Ports scanned: ", end="\n")
-print(f"{GREEN}[+++] {portCount} open ports have scanned on {host}")  
+print(f"{GREEN}[+++] Completed port scan!", end="\n")
+print(f"{GREEN}[+++] Ports scanned: {num_ports}", end="\n")
+print(f"{GREEN}[+++] {portCount} ports are open on {host}.")  
