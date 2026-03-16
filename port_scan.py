@@ -28,7 +28,7 @@ def is_port_open(host, port):
 
 # get ip or hostname from user input
 host = input("Enter the host IP address or domain name to scan: ")
-num_ports = int(input("Enter number of ports to scan (large number ==> scan takes more time..)"))
+num_ports = int(input("Enter how many ports to increment through (large number ==> scan takes more time..)"))
 ip = socket.gethostbyname(host) # also accept IPs (user can also enter a valid IP; method will return it)
 
 try:
