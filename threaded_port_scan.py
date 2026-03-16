@@ -17,6 +17,7 @@ print_lock = Lock()
 
 def port_scan(port):
     # Scan a port on the global variable `host`
+    # currently broken, need time to figure out
     try:
         s = socket.socket()
         s.connect((host, port))
