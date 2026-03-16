@@ -1,5 +1,6 @@
 import socket # module for connections
 import ipaddress # module for validating IP addresses
+import time # module for timing functions (will be used for time duration of scan)
 from colorama import init, Fore # module for colored text
 
 init() #initialize colorama
@@ -38,7 +39,10 @@ except ValueError:
     print(f"{GRAY}[-] Invalid IP address{RESET}")
     exit()
 
-# iterate through ports 1 to 1024
+# record start time
+start_time = time.time()
+
+# iterate through ports 1 to number of ports
 for port in range(1, num_ports):
     if is_port_open(host, port):
         # Print open ports in green
@@ -47,7 +51,14 @@ for port in range(1, num_ports):
     else:
         # Print closed ports in gray and overwrite the line for better readability
         print(f"{GRAY}[-] Port {port} is closed..     {RESET}", end='\r')
+
+#record end time
+end_time = time.time()
+
+# calculate total runtime in seconds
+duration = end_time - start_time
+
 # prints message and count after scan 
 print(f"{GREEN}[+++] Completed port scan!", end="\n")
-print(f"{GREEN}[+++] Ports scanned: {num_ports}", end="\n")
-print(f"{GREEN}[+++] {portCount} ports are open on {host}.")  
+print(f"{GREEN}[+++] {portCount} ports are open on {host}.")
+print(f"{GREEN}[+++] Scan completed in {duration:.2f} seconds")
